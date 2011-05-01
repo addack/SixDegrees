@@ -45,9 +45,7 @@ class Graph(object):
 
     def get_connections_buckets(self, actor):
         '''
-        Returns list of all actor's connections for each movies. Connections
-        are unique within the same bucket.
-        You can use this function to avoid list copy.
+        Returns list of Bucket. Bucket is a pair with movie and actor distribution.
         '''
         connections_buckets = []
         for movie in self.actor_to_movie[actor]:
@@ -65,7 +63,6 @@ class Graph(object):
         
 def load_graph(file):
     graph = Graph()
-    
     with open(file) as f:
         current_movie = None
 
@@ -73,6 +70,5 @@ def load_graph(file):
             if line[0] != '\t':
                 current_movie = line.strip()
             else:
-                graph.add(line.strip(), current_movie)
-    
+                graph.add(line.strip(), current_movie)    
     return graph

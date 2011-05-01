@@ -31,5 +31,5 @@ class LayerGenerator(object):
             old_layers |= current_layer
             new_layer -= old_layers
             current_layer = new_layer
-            logging.info('Exploration layer #: %s, built in %s' % 
-                         (len(current_layer), time.time() - t))
+            logging.info('Exploration layer built in %s (#: %s)' % 
+                         (time.time() - t, len(current_layer)))

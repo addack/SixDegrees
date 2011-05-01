@@ -37,4 +37,4 @@ class DegreeFinder(object):
         for layer in layers:
             old_layer = layer
             degree += 1
-        print degree, old_layer
+        return degree, old_layer
