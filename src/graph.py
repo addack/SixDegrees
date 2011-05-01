@@ -10,6 +10,12 @@ from collections import defaultdict
 class Stats(object):
     pass
 
+class Bucket(object):
+    
+    def __init__(self, movie, actors):
+        self.movie = movie
+        self.actors = actors
+
 class Graph(object):
     '''
     Graph is created using two maps. One contains the actors with all the 
@@ -45,7 +51,7 @@ class Graph(object):
         '''
         connections_buckets = []
         for movie in self.actor_to_movie[actor]:
-            connections_buckets.append(self.movie_to_actor[movie])
+            connections_buckets.append(Bucket(movie, self.movie_to_actor[movie]))
         return connections_buckets
 
     def get_info(self):

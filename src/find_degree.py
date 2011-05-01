@@ -18,8 +18,8 @@ def main():
 
     degree = degree_finder.DegreeFinder(g)    
     #print degree.compute_max_degree('Pitt, Brad')
-    print degree.compute_degree('Pitt, Brad', 'Hong, Duyen')
-    #print degree.compute_degree('Pitt, Brad', 'Klooren, Mati')
+    #print degree.compute_degree('Pitt, Brad', 'Hong, Duyen')
+    print degree.compute_degree('Pitt, Brad', 'Klooren, Mati')
     #print degree.compute_degree('Pitt, Brad', 'Reno, Jean (I)')
 
 if __name__ == '__main__':
