@@ -2,7 +2,7 @@
 '''
 Created on Apr 30, 2011
 
-@author: Michel Tricot
+@author: Addack
 '''
 
 from collections import defaultdict
@@ -17,7 +17,7 @@ class Graph(object):
     This implementation reduces amount of data in memory that you would have 
     with adjacency list implementation. Drawback of this storage is that you
     need to recompute connections list at each request for it. 
-    If you want to work fast on connections, use the getConnectionsBuckets.
+    If you want to work fast on connections, use the get_connections_buckets.
     '''
     def __init__(self):
         self.movie_to_actor = defaultdict(list)
@@ -28,18 +28,18 @@ class Graph(object):
         self.movie_to_actor[movie].append(actor)
         self.actor_to_movie[actor].append(movie)
        
-    def getConnections(self, actor):
+    def get_connections(self, actor):
         '''
-        Return set of all actor's connections. Connections are unique. 
+        Returns set of all actor's connections. Connections are unique. 
         '''
         connections = set()
         for movie in self.actor_to_movie[actor]:
             connections.update(self.movie_to_actor[movie])
         return connections
 
-    def getConnectionsBuckets(self, actor):
+    def get_connections_buckets(self, actor):
         '''
-        Return list of all actor's connections for each movies. Connections
+        Returns list of all actor's connections for each movies. Connections
         are unique within the same bucket.
         You can use this function to avoid list copy.
         '''
@@ -48,9 +48,9 @@ class Graph(object):
             connections_buckets.append(self.movie_to_actor[movie])
         return connections_buckets
 
-    def getInfo(self):
+    def get_info(self):
         '''
-        Return some information about the graph.
+        Returns some information about the graph.
         '''
         s = Stats()
         s.actors_count = len(self.actor_to_movie)

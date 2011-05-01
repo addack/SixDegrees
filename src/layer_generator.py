@@ -2,7 +2,7 @@
 '''
 Created on May 1, 2011
 
-@author: Michel Tricot
+@author: Addack
 '''
 
 import logging
@@ -22,7 +22,7 @@ class LayerGenerator(object):
             t = time.time()
             new_layer = set()
             for actor in current_layer:
-                connections_buckets = self.graph.getConnectionsBuckets(actor)
+                connections_buckets = self.graph.get_connections_buckets(actor)
                 for connections_bucket in connections_buckets:
                     new_layer.update(connections_bucket)
             old_layers |= current_layer

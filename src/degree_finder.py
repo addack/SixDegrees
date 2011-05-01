@@ -2,7 +2,7 @@
 '''
 Created on May 1, 2011
 
-@author: Michel Tricot
+@author: Addack
 '''
 
 import layer_generator
@@ -11,12 +11,13 @@ class DegreeFinder(object):
     '''
     Provide methods to extract degree information.
     '''    
+
     def __init__(self, graph):
         self.graph = graph
         
-    def computeDegree(self, from_actor, to_actor):
+    def compute_degree(self, from_actor, to_actor):
         '''
-        Return degree between two actors.
+        Returns degree between two actors.
         '''
         layers = layer_generator.LayerGenerator(self.graph, from_actor)
         degree = 0
@@ -26,9 +27,9 @@ class DegreeFinder(object):
             degree += 1
         return degree
     
-    def computeMaxDegree(self, actor):
+    def compute_max_degree(self, actor):
         '''
-        Return actor's last layer and degree.
+        Returns actor's last layer and degree.
         '''
         layers = layer_generator.LayerGenerator(self.graph, actor)
         old_layer = None
