@@ -5,6 +5,7 @@ Created on May 1, 2011
 @author: Michel Tricot
 '''
 
+import logging
 import time
 
 class LayerGenerator(object):
@@ -27,7 +28,5 @@ class LayerGenerator(object):
             old_layers |= current_layer
             new_layer -= old_layers
             current_layer = new_layer
-            print("exploration layer #: %s, built in %s" % (len(current_layer),
-                                                            time.time() - t))
-
-        
+            logging.info('Exploration layer #: %s, built in %s' % 
+                         (len(current_layer), time.time() - t))
