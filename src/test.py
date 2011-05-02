@@ -20,9 +20,10 @@ import graph
 
 def test(degree):
     #print degree.compute_max_degree('Pitt, Brad')
-    print degree.compute_degree('Pitt, Brad', 'Hong, Duyen')
+    #print degree.compute_degree('Pitt, Brad', 'Hong, Duyen')
     #print degree.compute_degree('Pitt, Brad', 'Klooren, Mati')
     #print degree.compute_degree('Pitt, Brad', 'Reno, Jean (I)')
+    pass
 
 def main():
     g = graph.load_graph(sys.argv[1])

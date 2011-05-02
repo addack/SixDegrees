@@ -1,0 +1,42 @@
+How to use it
+-------------
+
+$ cd data
+$ unzip graph.data.zip
+$ cd ../src
+$ python cmdline.py ../data/graph.data
+6q> set Clooney, George
+6q> max_degree
+INFO:root:Exploration layer built in 0.0138080120087 (#: 35455)
+INFO:root:Exploration layer built in 3.71855092049 (#: 730327)
+INFO:root:Exploration layer built in 12.4120540619 (#: 446690)
+INFO:root:Exploration layer built in 3.13764882088 (#: 39576)
+INFO:root:Exploration layer built in 0.412933111191 (#: 3330)
+INFO:root:Exploration layer built in 0.178395032883 (#: 297)
+INFO:root:Exploration layer built in 0.184021949768 (#: 21)
+INFO:root:Exploration layer built in 0.163532972336 (#: 4)
+INFO:root:Exploration layer built in 0.144528865814 (#: 0)
+(8, set(['Hong, Duyen', 'Phuc, Henry', 'Thu, Hang', 'Hong, Phuong']))
+INFO:root:Total computation took: 20.6537530422
+6d> 
+6d> help
+
+Documented commands (type help <topic>):
+========================================
+current  disable_log  max_degree  search  show_stats
+degree   enable_log   quit        set   
+
+Undocumented commands:
+======================
+EOF  help
+6d> 
+6d> help degree
+
+        Computes degree between currently set actor and provided destination actor.
+        Eg:
+        6d> set Clooney, George
+        6d> degree Klooren, Mati
+        3 
+6d>
+6d> quit
+$

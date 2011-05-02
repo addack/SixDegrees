@@ -6,6 +6,7 @@ Created on May 2, 2011
 '''
 
 import cmd
+import functools
 import logging
 import re
 import sys
@@ -14,11 +15,12 @@ import time
 import degree_finder
 import graph
 
-def timed_function(f):
-    def time_function_internal(self, line):
+def timed_log(f):
+    @functools.wraps(f)
+    def time_function_internal(*args, **kwargs):
         t = time.time()
-        f(self, line)
-        #logging.INFO('Total computation took: %s' % (time.time() - t))
+        f(*args, **kwargs)
+        logging.info('Total computation took: %s' % (time.time() - t))
     return time_function_internal
 
 class SixDegreesCmd(cmd.Cmd):
@@ -46,6 +48,9 @@ class SixDegreesCmd(cmd.Cmd):
     def do_show_stats(self, line):
         '''
         Shows some graph's information.
+        Eg:
+        6d> show_stats
+        #actors: 1327007, #movies: 604208
         '''
         s = self.graph.get_info()
         print('#actors: %s, #movies: %s' % (s.actors_count, s.movies_count))
@@ -53,37 +58,61 @@ class SixDegreesCmd(cmd.Cmd):
     def do_set(self, line):
         '''
         Sets starting actor.
+        Eg:
+        6d> set Clooney, George
         '''
         self.actor = line.strip()
 
     def do_current(self, line):
         '''
         Prints currently set actor.
+        6d> set Clooney, George
+        6d> current
+        Clooney, George 
         '''
         print(self.actor)
 
-    #@timed_function
+    @timed_log
     def do_degree(self, line):
         '''
-        Computes degree between currently set actor and provided destination actor. 
+        Computes degree between currently set actor and provided destination actor.
+        Eg:
+        6d> set Clooney, George
+        6d> degree Klooren, Mati
+        3 
         '''
         print(self.degree.compute_degree(self.actor, line))
     
-    #@timed_function
+    @timed_log
     def do_max_degree(self, line):
         '''
         Computes last available layer and degree for currently set actor.
+        Eg:
+        6d> set Clooney, George
+        6d> max_degree
+        (8, set(['Hong, Duyen', 'Phuc, Henry', 'Thu, Hang', 'Hong, Phuong']))
         '''
         print(self.degree.compute_max_degree(self.actor))
     
     def do_search(self, line):
         '''
         Searches all actors matching provided regexp.
+        Eg:
+        6d> search Clooney.*
+        Clooney, Andrew
+        Clooney, Nick
+        Clooney, George
         '''
         searcher = re.compile(line)
         for name in self.graph.actor_to_movie:
             if searcher.search(name):
                 print name
+    
+    def do_quit(self, line):
+        '''
+        Exits program.
+        '''
+        return True
     
     def do_EOF(self, line):
         return True
