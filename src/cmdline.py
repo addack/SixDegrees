@@ -23,6 +23,19 @@ def timed_log(f):
         logging.info('Total computation took: %s' % (time.time() - t))
     return time_function_internal
 
+def expect_argument(error):
+    def expect_argument_wrap(f):
+        @functools.wraps(f)
+        def expect_argument_internal(*args, **kwargs):
+            t = time.time()
+            if len(args) == 2 and args[1]:
+                f(*args, **kwargs)
+            else:
+                print error
+        return expect_argument_internal
+    return expect_argument_wrap
+
+
 class SixDegreesCmd(cmd.Cmd):
     
     def __init__(self, g):
@@ -32,6 +45,9 @@ class SixDegreesCmd(cmd.Cmd):
         self.actor = None
         self.graph = g
         self.degree = degree_finder.DegreeFinder(g)
+
+    def validate_actor(self, actor):
+        return actor in self.graph.actor_to_movie
 
     def do_enable_log(self, line):
         '''
@@ -55,6 +71,7 @@ class SixDegreesCmd(cmd.Cmd):
         s = self.graph.get_info()
         print('#actors: %s, #movies: %s' % (s.actors_count, s.movies_count))
 
+    @expect_argument('Please provide source actor to use')
     def do_set(self, line):
         '''
         Sets starting actor.
@@ -62,6 +79,9 @@ class SixDegreesCmd(cmd.Cmd):
         6d> set Clooney, George
         '''
         self.actor = line.strip()
+        if not self.validate_actor(self.actor):
+            self.actor = None
+        print self.actor
 
     def do_current(self, line):
         '''
@@ -72,6 +92,7 @@ class SixDegreesCmd(cmd.Cmd):
         '''
         print(self.actor)
 
+    @expect_argument('Please provide destination actor')
     @timed_log
     def do_degree(self, line):
         '''
@@ -81,7 +102,10 @@ class SixDegreesCmd(cmd.Cmd):
         6d> degree Klooren, Mati
         3 
         '''
-        print(self.degree.compute_degree(self.actor, line))
+        if self.validate_actor(self.actor) and self.validate_actor(line):
+            print('Found at degree %s' % self.degree.compute_degree(self.actor, line))
+        else:
+            print('Please provide valid input and output actors')
     
     @timed_log
     def do_max_degree(self, line):
@@ -92,8 +116,12 @@ class SixDegreesCmd(cmd.Cmd):
         6d> max_degree
         (8, set(['Hong, Duyen', 'Phuc, Henry', 'Thu, Hang', 'Hong, Phuong']))
         '''
-        print(self.degree.compute_max_degree(self.actor))
-    
+        if self.validate_actor(self.actor):
+            print('Last layer is %s' % self.degree.compute_max_degree(self.actor))
+        else:
+            print('Please provide valid input actor')
+
+    @expect_argument('Please provide regexp of an actor name to search for')    
     def do_search(self, line):
         '''
         Searches all actors matching provided regexp.
@@ -103,10 +131,13 @@ class SixDegreesCmd(cmd.Cmd):
         Clooney, Nick
         Clooney, George
         '''
-        searcher = re.compile(line)
-        for name in self.graph.actor_to_movie:
-            if searcher.search(name):
-                print name
+        try:
+            searcher = re.compile(line)
+            for name in self.graph.actor_to_movie:
+                if searcher.search(name):
+                    print name
+        except Exception, e:
+            print(e)
     
     def do_quit(self, line):
         '''
