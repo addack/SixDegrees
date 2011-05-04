@@ -9,6 +9,7 @@ import cmd
 import functools
 import logging
 import re
+import os
 import sys
 import time
 
@@ -153,9 +154,12 @@ class SixDegreesCmd(cmd.Cmd):
 
 
 def main():
-    g = graph.load_graph(sys.argv[1])
-    interpretor = SixDegreesCmd(g)
-    interpretor.cmdloop()
+    if len(sys.argv) == 2 and os.path.exists(sys.argv[1]):
+        g = graph.load_graph(sys.argv[1])
+        interpretor = SixDegreesCmd(g)
+        interpretor.cmdloop()
+    else:
+        print("Please provide valid input database")
     
 if __name__ == '__main__':
     logging.getLogger().setLevel(logging.INFO)
