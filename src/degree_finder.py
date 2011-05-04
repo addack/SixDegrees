@@ -18,7 +18,13 @@ class DegreeFinder(object):
     def compute_degree(self, from_actor, to_actor):
         '''
         Returns degree between two actors.
+        Small optimization when providing input, we start with the actor with the 
+        less connections so it can result in smaller layer.
         '''
+        first_bucket = self.graph.get_connections_buckets(from_actor)
+        second_bucket = self.graph.get_connections_buckets(to_actor)
+        if len(first_bucket) > len(second_bucket):
+            to_actor, from_actor = from_actor, to_actor
         layers = layer_generator.LayerGenerator(self.graph, from_actor)
         degree = 0
         for layer in layers:
