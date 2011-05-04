@@ -117,7 +117,7 @@ class SixDegreesCmd(cmd.Cmd):
         (8, set(['Hong, Duyen', 'Phuc, Henry', 'Thu, Hang', 'Hong, Phuong']))
         '''
         if self.validate_actor(self.actor):
-            print('Last layer is %s' % self.degree.compute_max_degree(self.actor))
+            print('Last layer is %s' % str(self.degree.compute_max_degree(self.actor)))
         else:
             print('Please provide valid input actor')
 
