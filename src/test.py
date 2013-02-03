@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 '''
-Created on May 2, 2011
-
-@author: Michel Tricot
-'''
-
-# -*- coding: utf-8 -*-
-'''
 Created on Apr 30, 2011
 
 @author: Addack
