@@ -2,7 +2,7 @@
 '''
 Created on May 2, 2011
 
-@author: Michel Tricot
+@author: Addack
 '''
 
 import cmd
